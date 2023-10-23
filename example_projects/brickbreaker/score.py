@@ -12,5 +12,5 @@ class Score:
                 row.remove(None)
 
     def draw(self, surface):
-        text = self.font.render("Score: " + str(self.score), 1, (255, 255, 255))
+        text = self.font.render(f"Score: {str(self.score)}", 1, (255, 255, 255))
         surface.blit(text, (10, 10))

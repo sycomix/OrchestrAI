@@ -14,15 +14,15 @@ with open('config.yml', 'r') as f:
 wandb_enabled = config['wandb_enabled']
 
 
-def start_module(module_input, dummy=None):   
+def start_module(module_input, dummy=None):
     """This function is used to invoke the start module, to accept user input into the pipeline""" 
-    module_name = "start_module"
     print("\033[92mPlease specify the task you want to perform:\033[00m")
     start = input()
 
     output = module_input + start
 
     if wandb_enabled:
+        module_name = "start_module"
         wb.log_tool(tool_name = module_name,
                     inputs    = {},
                     outputs   = {"original_input": output},
@@ -32,13 +32,13 @@ def start_module(module_input, dummy=None):
     return output
 
 def human_intervention(module_input, dummy=None):
-    module_name = "human_intervention"
     print("Please provide additional information to guide the agent:")
     additional_info = input()
 
     output = module_input + additional_info
 
     if wandb_enabled:
+        module_name = "human_intervention"
         wb.log_tool(tool_name = module_name,
                     inputs    = {},
                     outputs   = {"human_intervention": output},
@@ -82,14 +82,10 @@ def engineer(prompt, model_config=None):
 
     # Parse the chat and extract files
     files = h.parse_chat(response_text)
-    
+
     # Save files to disk
     h.to_files(files)
-    # Generate repo promtpt.
-
-    # Output of the module is a concatenated text of the codebase
-    codebase = h.extract_codebase('generated_code')
-    return codebase
+    return h.extract_codebase('generated_code')
 
 def debugger(codebase, model_config=None):
     module_name = "debugger"

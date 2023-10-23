@@ -12,13 +12,11 @@ import atexit
 with open('config.yml', 'r') as f:
     config = yaml.safe_load(f)
 
-# Obtain the config variables
-wandb_enabled = config['wandb_enabled']
-pipeline_name = config['pipeline'] 
-pipeline_path = "pipelines/" + pipeline_name + ".yml"
+pipeline_name = config['pipeline']
+pipeline_path = f"pipelines/{pipeline_name}.yml"
 
 
-if wandb_enabled: # Initialize wandb if it's enabled
+if wandb_enabled := config['wandb_enabled']:
     wandb.init(project="OrchestrAI")
     wandb.config.wandb_enabled = wandb_enabled
 

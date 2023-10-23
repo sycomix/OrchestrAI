@@ -74,11 +74,7 @@ def run_main():
     # of the script is directly displayed in real-time on the terminal.
     # stderr=subprocess.PIPE captures the error stream of the script, which can be later accessed.
         # Check if 'python3' is available in PATH
-    if shutil.which('python3') is not None:
-        python_command = 'python3'
-    else:
-        python_command = 'python'
-
+    python_command = 'python3' if shutil.which('python3') is not None else 'python'
     process = subprocess.Popen(
         [python_command, "generated_code/main.py"],
         text=True,
